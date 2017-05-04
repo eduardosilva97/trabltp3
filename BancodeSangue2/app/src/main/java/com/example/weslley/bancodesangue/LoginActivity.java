@@ -1,11 +1,3 @@
-/*Componentes:
-Carlos Eduardo Silva Santos
-Danilo Oliveira de Brito
-Guilherme Campos Motta Telles de Macedo
-André Dorea Mendes
-Weslley Borges
- */
-
 package com.example.weslley.bancodesangue;
 
 import android.content.Context;
@@ -56,16 +48,18 @@ public class LoginActivity extends AppCompatActivity {
                 email = txtEmailLog.getText().toString();
                 senha = txtSenhaLog.getText().toString();
 
-                String metodo = "login";
+                if (email.equals("") || senha.equals("")) {
+                    Toast.makeText(LoginActivity.this, "Preencha o(s) campo(s) vazio(s)", Toast.LENGTH_LONG).show();
+                }
+                else {
 
-                BackgroundTask backgroundTask = new BackgroundTask (LoginActivity.this);
+                    String metodo = "login";
 
-                backgroundTask.execute (metodo, email, senha);
+                    BackgroundTask backgroundTask = new BackgroundTask(LoginActivity.this);
+
+                    backgroundTask.execute(metodo, email, senha);
+                }
             }
         });
-
-
-
-
     }
 }

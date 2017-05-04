@@ -2,8 +2,8 @@
 	
 require "conexao.php";
 
-$email = "bibo@bibo.com";
-$senha = "uerleis";
+$email = $_POST["email"];
+$senha = $_POST["senha"];
 
 $sqlQuery = "select nome from Doadores where email like '$email' and senha like '$senha';";
 
@@ -15,10 +15,10 @@ if (mysqli_num_rows ($result) > 0) {
 	
 	$nome = $row ["nome"];
 	
-	echo "Olá, bem vindo, " . $nome;
+	echo "Seja bem vindo, " . $nome . ".";
 }
 else {
 	
-	echo "Erro no login. Usuário ou senha inválidos.";
+	echo "Erro no login. Usuario ou senha invalidos.";
 }	
 ?>

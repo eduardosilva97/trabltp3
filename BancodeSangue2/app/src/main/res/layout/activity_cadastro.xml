@@ -63,7 +63,7 @@
                     android:id="@+id/textView2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="CPF (apenas números):" />
+                    android:text="CPF:" />
 
                 <EditText
                     android:id="@+id/txtCPF"
@@ -416,7 +416,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:inputType="phone" />
+                    android:inputType="phone"
+                    android:hint="DDD+Telefone"/>
             </LinearLayout>
         </TableRow>
 
@@ -477,7 +478,14 @@
             android:layout_width="match_parent"
             android:layout_height="10dp"/>
 
+        <TableRow>
 
+            <CheckBox
+                android:id="@+id/chkDoador"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Quero ser um doador" />
+        </TableRow>
 
         <TableRow>
             <LinearLayout

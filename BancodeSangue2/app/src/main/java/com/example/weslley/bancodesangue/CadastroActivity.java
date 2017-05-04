@@ -1,5 +1,13 @@
 package com.example.weslley.bancodesangue;
 
+/* Componentes
+Carlos Eduardo Silva Santos
+Danilo Oliveira de Brito
+Guilherme Campos Mota Telles de Macedo
+André Dórea Mendes
+Weslley Borges
+ */
+
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -7,6 +15,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -16,11 +25,12 @@ import java.util.List;
 
 public class CadastroActivity extends AppCompatActivity {
 
+    CheckBox chkDoador;
     Button btnCancelar, btnCadastrar;
     EditText txtNome, txtCPF, txtRG, txtEndereço, txtBairro, txtCidade, txtEstado,
              txtTelPes, txtTelCom, txtTelRes, txtSenhaCad1, txtSenhaCad2, txtEmail;
     Spinner spnGrupoSanguineo, spnDia, spnMes, spnAno;
-    String nome, email, CPF, RG, endereco, bairro, cidade, estado, telPes, telRes, telCom, senhaCad1, senhaCad2, grupoSanguineo, dia, mes, ano;
+    String nome, email, CPF, RG, endereco, bairro, cidade, estado, telPes, telRes, telCom, senhaCad1, senhaCad2, grupoSanguineo, dia, mes, ano, doador;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +52,7 @@ public class CadastroActivity extends AppCompatActivity {
         txtSenhaCad1 = (EditText) findViewById(R.id.txtSenhaCad1);
         txtSenhaCad2 = (EditText) findViewById(R.id.txtSenhaCad2);
         txtEmail     = (EditText) findViewById(R.id.txtEmailCad);
+        chkDoador    = (CheckBox) findViewById(R.id.chkDoador);
 
         carregarSpinnerGrupoSanguineo();
 
@@ -72,17 +83,24 @@ public class CadastroActivity extends AppCompatActivity {
                 mes            = spnMes.getSelectedItem().toString();
                 ano            = spnAno.getSelectedItem().toString();
 
-                if (senhaCad1.equals(senhaCad2)) {
+                if (chkDoador.isChecked())
+                    doador = "true";
+                else
+                    doador = "false";
+
+                if (!senhaCad1.equals(senhaCad2) || verificarCampoVazio()) {
+                    Toast.makeText(CadastroActivity.this, "Senhas não coincidem ou existem campos vazios.", Toast.LENGTH_LONG).show();
+                }
+                else {
                     String metodo = "registro";
 
                     BackgroundTask backgroundTask = new BackgroundTask(CadastroActivity.this);
 
-                    backgroundTask.execute(metodo, nome, RG, CPF, endereco, bairro, cidade, estado, telPes, telRes, telCom, senhaCad1, grupoSanguineo, ano + "-" + mes + "-" + dia, email);
+                    backgroundTask.execute(metodo, nome, RG, CPF, endereco, bairro, cidade, estado, telPes, telRes, telCom, senhaCad1, grupoSanguineo, dia + "/" + mes + "/" + ano, email, doador);
 
                     finish();
                 }
-                else
-                    Toast.makeText(CadastroActivity.this, "Senhas não coincidem.", Toast.LENGTH_LONG).show();
+
             }
         });
 
@@ -92,6 +110,16 @@ public class CadastroActivity extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    private boolean verificarCampoVazio () {
+        if (nome.equals("") || email.equals("") || CPF.equals("") || RG.equals("") || 
+		endereco.equals("") || bairro.equals("") || cidade.equals("") || estado.equals("") || 
+		telPes.equals("") || telRes.equals("") || telCom.equals("") || senhaCad1.equals("") || 
+		senhaCad2.equals("") || grupoSanguineo.equals("") || dia.equals("") || mes.equals("") || ano.equals(""))
+			return true;
+			
+		return false;
     }
 
     private void carregarSpinnerGrupoSanguineo ()
@@ -115,10 +143,10 @@ public class CadastroActivity extends AppCompatActivity {
 
     private void carregarSpinnerDias ()
     {
-        List<Integer> dias = new ArrayList<>();
+        List<String> dias = new ArrayList<>();
 
-        for (int i = 1; i < 32; i++)
-            dias.add(i);
+        for (Integer i = 1; i < 32; i++)
+            dias.add(i.toString());
 
         ArrayAdapter adapterDias = new ArrayAdapter(this, R.layout.support_simple_spinner_dropdown_item, dias);
 
@@ -128,10 +156,10 @@ public class CadastroActivity extends AppCompatActivity {
 
     private void carregarSpinnerMeses ()
     {
-        List<Integer> meses = new ArrayList<>();
+        List<String> meses = new ArrayList<>();
 
-        for (int i = 1; i < 13; i++)
-            meses.add(i);
+        for (Integer i = 1; i < 13; i++)
+            meses.add(i.toString());
 
         ArrayAdapter adapterDias = new ArrayAdapter(this, R.layout.support_simple_spinner_dropdown_item, meses);
 
@@ -141,10 +169,10 @@ public class CadastroActivity extends AppCompatActivity {
 
     private void carregarSpinnerAnos ()
     {
-        List<Integer> anos = new ArrayList<>();
+        List<String> anos = new ArrayList<>();
 
-        for (int i = 1999; i > 1959; i--)
-            anos.add(i);
+        for (Integer i = 1999; i > 1959; i--)
+            anos.add(i.toString());
 
         ArrayAdapter adapterDias = new ArrayAdapter(this, R.layout.support_simple_spinner_dropdown_item, anos);
 

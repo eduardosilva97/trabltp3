@@ -16,16 +16,18 @@ $senha          = $_POST["senha"];
 $grupoSanguineo = $_POST["grupoSanguineo"];
 $dataNascimento = $_POST["dataNascimento"];
 $email          = $_POST["email"];
+$doador         = $_POST["doador"];
 
-$sqlQuery = "insert into Doadores values ('$nome', '$CPF', '$RG', '$endereco', '$bairro', '$cidade', '$estado', '$telPes', '$telRes', '$telCom', '$senha', '$grupoSanguineo', '$dataNascimento', '$email');";
+$sqlQuery = "insert into Doadores values ('$nome', '$CPF', '$RG', '$endereco', '$bairro', '$cidade', '$estado', '$telPes', '$telRes', '$telCom', '$senha', '$grupoSanguineo', '$dataNascimento', '$email', '$doador');";
 
 if (mysqli_query ($conexao, $sqlQuery)) {
 	
-	//echo "Dados inseridos com sucesso!";
+	echo "Registro bem sucedido";
+	
 }
 else {
 	
-	//echo "Erro ao registrar dados: " . mysqli_error ($conexao);
+	echo "Erro ao registrar dados: " . mysqli_error ($conexao);
 }
 
 	
